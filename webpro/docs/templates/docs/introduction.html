@@ -1,0 +1,107 @@
+<!-- templates/home.html #0013-->
+{% extends '_base.html' %}
+{% load static %}
+
+{% block title %}Documents{% endblock title %}
+
+{% block content %}
+
+
+  <div class="container-fluid my-md-4">
+    <div class="row">
+      <div class="col-md-2" style="margin-left:20px;">
+        <div class="sticky-top">
+          <h4>Documentations</h4>
+          <nav class="navbar navbar-expand-lg navbar-light bg-white">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="true" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse show bd-links" id="navbarToggler">
+              <ul class="nav flex-column mr-auto mt-lg-0">
+
+                <!-- {#introduction #} -->
+                <li class="nav-item">
+                  <button class="btn d-inline-flex align-items-center rounded" role="button" aria-expanded="false" aria-controls="navbar-risers">
+                    Introduction
+                  </button>
+                </li>
+
+                <!-- {#riser_bar #} -->
+                <li class="nav-item">
+                  <button class="btn d-inline-flex align-items-center rounded" data-toggle="collapse" href="#navbar-risers" role="button" aria-expanded="false" aria-controls="navbar-risers">
+                    Risers
+                  </button>
+                  <div class="collapse show" id="navbar-risers">
+                    <ul class="nav nav-sm flex-column">
+                      <li class="nav-item list-unstyled">
+                        <a class="nav-link d-inline-flex" href="#Riser_sizing">Riser Sizing</a>
+                      </li>
+                      <li class="nav-item list-unstyled">
+                        <a class="nav-link d-inline-flex" href="#Pipe_weight">Pipe Weight</a>
+                      </li>
+                      <li class="nav-item list-unstyled">
+                        <a class="nav-link d-inline-flex" href="#SCR_shape">SCR Configuration</a>
+                      </li>
+                      <li class="nav-item list-unstyled">
+                        <a class="nav-link d-inline-flex" href="#SLWR_shape">SLWR Configuration</a>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+
+              </ul>
+            </div>
+          </nav>
+        </div>
+      </div>
+
+      <div class="col-md-7">
+
+        <h2>Introduction</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+      </div>
+
+      <div class="col-md-2 d-none d-md-block" style="margin-right:20px;">
+
+        <div class="sticky-top">
+          <h6>On this page</h6>
+          <hr>
+          <div class="bd-toc">
+            <ul class="nav nav-sm flex-column">
+              <li>
+                <a href="#Pipe_sizing">Riser Sizing</a>
+              </li>
+              <li>
+                <a href="#Pipe2_weight">Riser Weight</a>
+                <ul>
+                  <li class="list-unstyled"><a href="#Pipe2_weight">Test 1</a></li>
+                  <li class="list-unstyled"><a href="#Pipe2_weight">Test 2</a></li>
+                </ul>
+              </li>
+              <li>
+                <a href="#On-bottom_stability">Riser Catenary Shape</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+
+
+      </div>
+
+    </div>
+  </div>
+
+
+
+{% endblock content%}

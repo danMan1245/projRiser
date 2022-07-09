@@ -1,0 +1,54 @@
+<!-- templates/home.html #0013-->
+{% extends '_base.html' %}
+{% load static %}
+{% load riser_extras %}
+
+{% block title %}My Modules{% endblock title %}
+
+{% block content %}
+
+
+  <div class="container my-md-4">
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="sticky-top">
+          {% if mygroups %}
+            <h4>My Modules</h4>
+            <nav class="navbar navbar-expand-lg navbar-light bg-white">
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="true" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse show bd-links" id="navbarToggler">
+                <ul class="nav flex-column mr-auto mt-lg-0">
+                  {% for group in mygroups %}
+                    {% with group|addstr:"/"|addstr:group|addstr:"_bar.html" as template %}
+                      {% include template %}
+                    {% endwith %}
+                  {% endfor %}
+                </ul>
+              </div>
+            </nav>
+          {% else %}
+            <h4>No modules have been assigned yet.</h4>
+            {% endif %}
+
+        </div>
+      </div>
+
+      <div class="col-sm-9">
+
+          {% for group in mygroups %}
+            {% with group|addstr:"/"|addstr:group|addstr:"_intro.html" as template %}
+              {% include template %}
+            {% endwith %}
+          {% endfor %}
+
+
+
+      </div>
+    </div>
+  </div>
+
+
+
+{% endblock content%}

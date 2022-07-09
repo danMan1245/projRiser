@@ -1,0 +1,290 @@
+{% extends "risers/riser_base.html" %}
+{% load static %}
+
+{% block post_content %}
+
+<p>Risers: Riser Sizing |
+   Project: {{ risersizing.project_name }}
+</p>
+
+<div class="container my-md-4">
+  <div class="row">
+    <div class="col-sm-2">
+
+    </div>
+
+    <div class="col-sm-10">
+
+      <p>Created: {{ risersizing.created_at }} | Updated: {{ risersizing.updated_at }}</p>
+      <a name="summary"></a>
+      <h5>Summary</h5>
+      <p>This report presents riser wall thickness calculations for {{ risersizing.project_name }}.
+        This project is {{ risersizing.project_description }}. The pipe size selection should provide
+        a pipe of adequate strength to prevent the buckling and the collapse due to the internal or external overpressure.
+        The water depth at the riser base is {{ risersizing.pipe_base_WD|floatformat:1 }}-ft.
+      </p>
+      <p>The riser considered in this report is:</p>
+      <ul>
+        <li>{{ risersizing.pipe_OD }}-inch outer diameter (OD) riser</li>
+      </ul>
+      <p>
+        {% if risersizing.pipe_category == "DOI" %}
+          Since the riser is categorized as ,
+          30 CFR 250 and API RP 1111 are used to size the riser for the intenral and external overpressure.
+
+        {% elif risersizing.pipe_category == "DOT_liquid" %}
+          Since the riser is categorized as
+          49 CFR 195, ASME B31.4, 30 CFR 250, and API RP 1111 are used to size the riser for the internal and external overpressure.
+        {% elif risersizing.pipe_category == "DOT_gas" %}
+          Since the riser is categorized as
+          49 CFR 192, ASME B31.8, 30 CFR 250, and API RP 1111 are used to size the riser for the internal and external overpressure.
+        {% else %}
+          there is no right category found for this riser.
+        {% endif %}
+        DOI-regulated pipelines and DOT-regulated pipelines are defined in <a href="https://www.law.cornell.edu/cfr/text/30/250.1001">30 CFR 250.1001</a>.
+      </p>
+
+      <p>
+        Please note the riser wall thickness based on the pressure check needs to be confirmed by the riser global analysis,
+        to meet the strength and fatigue criteria specified in API RP 2RD.
+        The wall thickness needs to be increased if it has inadequate strength or fatigue performance.
+      </p>
+
+      <p>The wall thickness determined based on CFR using Barlow Equation are often conservative for the thick-walled pipe. A request to use API RP 1111 to determine
+        the wall thickness is an alternate compliance from requirment of 30 CFR 250 per BSEE <a class=""
+        href="https://www.bsee.gov/notices-to-lessees-ntl/notices-to-lessees/ntl-2009-g28-alternate-compliance-and-departure-requests">NTL 2009-G28</a>.
+      </p>
+
+      The following table presents the wall thickness based on the pipe pressure check.
+
+      {% if risersizing.pipe_category == "DOI" %}
+        <table class="table table-bordered table-sm">
+           <caption>Table 1: Summary of Riser Wall Thickness</caption>
+          <thead class="thead-light">
+            <tr>
+              <th colspan="4">Calculated required Wall Thickness (in)</th>
+            </tr>
+            <tr>
+              <th>30 CFR 250</th>
+              <th colspan="3">API RP 1111</th>
+            </tr>
+            <tr>
+              <th rowspan="2">Hoop Stress / Operation</th>
+              <th colspan="2">Burst Limit State</th>
+              <th rowspan="2">Collpase</th>
+            </tr>
+            <tr>
+              <th>Design</th>
+              <th>Hydrotest</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{ risersizing.WT_30cfr250|floatformat:3 }}</td>
+              <td>{{ risersizing.WT_api1111_design|floatformat:3 }}</td>
+              <td>{{ risersizing.WT_api1111_hydro|floatformat:3 }}</td>
+              <td>{{ risersizing.WT_collapse|floatformat:3 }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>The minimum required wall thickness is {{ risersizing.WT_30cfr250|floatformat:3 }}-inch per 30 CFR 250.
+          The minimum required wall thickness is {{ risersizing.WT_api1111|floatformat:3 }}-inch based on API RP 1111
+          {% if risersizing.k_burst == 0.45 %}, which is computed using the burst pressure formulation
+          in section 4.3.1 of API RP 1111, where k value (a parameter to account for variability in mechanical properties
+          and wall thickess) is equal to 0.45 for API 5L or API 5CT pipe.{% endif %}
+          {% if risersizing.k_burst == 0.5 %}, which is computed using the increased burst pressure formulation
+          in Annex B of API RP 1111, where k value (a parameter to account for variability in mechanical properties
+          and wall thickess) is equal to 0.5 for improvied mechanical properties and dimenisons control.{% endif %}
+          The selected wall thickness needs to be verified from the further riser strength and fatigue analysis.
+        </p>
+
+      {% elif risersizing.pipe_category == "DOT_liquid" %}
+        <table class="table table-bordered table-sm">
+           <caption>Table 1: Summary of Riser Wall Thickness</caption>
+          <thead class="thead-light">
+            <tr>
+              <th colspan="6">Calculated Required Wall Thickness (in)</th>
+            </tr>
+            <tr>
+              <th>49 CFR 195</th>
+              <th>30 CFR 250</th>
+              <th>ASME B31.4</th>
+              <th colspan="3">API RP 1111</th>
+            </tr>
+            <tr>
+              <th colspan="3" rowspan="2">Hoop Stress / Operation</th>
+              <th colspan="2">Burst Limit State</th>
+              <th rowspan="2">Collpase</th>
+            </tr>
+            <tr>
+              <th>Design</th>
+              <th>Hydrotest</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{ risersizing.WT_49cfr195|floatformat:3 }}</td>
+              <td>{{ risersizing.WT_30cfr250|floatformat:3 }}</td>
+              <td>{{ risersizing.WT_b31p4|floatformat:3 }}</td>
+              <td>{{ risersizing.WT_api1111_design|floatformat:3 }}</td>
+              <td>{{ risersizing.WT_api1111_hydro|floatformat:3 }}</td>
+              <td>{{ risersizing.WT_collapse|floatformat:3 }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>The minimum required wall thickness is {{ risersizing.WT_49cfr195|floatformat:3 }}-inch per 49 CFR 195
+          {% if risersizing.WT_30cfr250 == risersizing.WT_49cfr195 %}, which is the same wall thickness required as
+          30 CFR 250.{% else %}.{% endif %}
+          The minimum required wall thickness is {{ risersizing.WT_b31p4|floatformat:3 }}-inch based on ASME B31.4.
+          The minimum required wall thickness is {{ risersizing.WT_api1111|floatformat:3 }}-inch based on API RP 1111.
+          The required wall thickness based on ASME B31.4 is less than the wall thickness required by CFR codes because
+          ASME B31.4 uses the differential pressure, while CFR codes use the internal design pressure. B31.4 also uses a
+          less conservative Equation \eqref{eq5} for D/t less than 30.
+          The selected wall thickness needs to be verified from the further riser strength and fatigue analysis.
+        </p>
+
+      {% elif risersizing.pipe_category == "DOT_gas" %}
+      <table class="table table-bordered table-sm">
+         <caption>Table 1: Summary of Riser Wall Thickness</caption>
+        <thead class="thead-light">
+          <tr>
+            <th colspan="6">Calculated Required Wall Thickness (in)</th>
+          </tr>
+          <tr>
+            <th>49 CFR 192</th>
+            <th>30 CFR 250</th>
+            <th>ASME B31.8</th>
+            <th colspan="3">API RP 1111</th>
+          </tr>
+          <tr>
+            <th colspan="3" rowspan="2">Hoop Stress / Operation</th>
+            <th colspan="2">Burst Limit State</th>
+            <th rowspan="2">Collpase</th>
+          </tr>
+          <tr>
+            <th>Design</th>
+            <th>Hydrotest</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{ risersizing.WT_49cfr192|floatformat:3 }}</td>
+            <td>{{ risersizing.WT_30cfr250|floatformat:3 }}</td>
+            <td>{{ risersizing.WT_b31p8|floatformat:3 }}</td>
+            <td>{{ risersizing.WT_api1111_design|floatformat:3 }}</td>
+            <td>{{ risersizing.WT_api1111_hydro|floatformat:3 }}</td>
+            <td>{{ risersizing.WT_collapse|floatformat:3 }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>The minimum required wall thickness is {{ risersizing.WT_49cfr192|floatformat:3 }}-inch per 49 CFR 192
+        {% if risersizing.WT_30cfr250 == risersizing.WT_49cfr192 %}, which is the same wall thickness required as
+        30 CFR 250.{% else %}.{% endif %}
+        The minimum required wall thickness is {{ risersizing.WT_b31p8|floatformat:3 }}-inch based on ASME B31.8.
+        The minimum required wall thickness is {{ risersizing.WT_api1111|floatformat:3 }}-inch based on API RP 1111.
+        The required wall thickness based on ASME B31.8 is less than the wall thickness required by CFR codes because
+        ASME B31.8 uses the differential pressure, while CFR codes use the internal design pressure. B31.8 also uses a
+        less conservative Equation \eqref{eq4} for D/t less than 30.
+        The selected wall thickness needs to be verified from the further riser strength and fatigue analysis.
+      {% else %}
+        there is no right category found for this riser.
+      {% endif %}
+
+
+      <a name="inputs"></a>
+      <h5>Design Inputs</h5>
+      <p><i>Riser Properties</i></p>
+      <p>
+        Table 2 summarized the riser properties used in the sizing calculations for {{ risersizing.project_name }}.
+      </p>
+      <table class="table table-bordered table-sm">
+         <caption>Table 2: Riser Properties</caption>
+        <thead class="thead-light">
+          <tr>
+            <th>Parameters</th>
+            <th>Values</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Pipe Category</td>
+            <td> </td>
+          </tr>
+          <tr>
+            <td>Pipe OD (inch)</td>
+            <td>{{ risersizing.pipe_OD }}</td>
+          </tr>
+          <tr>
+            <td>Corrosion Allowance (inch)</td>
+            <td>{{ risersizing.pipe_WT_corr }}</td>
+          </tr>
+          <tr>
+            <td>Specified Min. Yield Strength (ksi)</td>
+            <td>{{ risersizing.SMYS }}</td>
+          </tr>
+          <tr>
+            <td>Specified Min. Ultimate Tensile Strength (ksi)</td>
+            <td>{{ risersizing.SMUTS}}</td>
+          </tr>
+          <tr>
+            <td>Modulus of Elasticity (ksi)</td>
+            <td>{{ risersizing.E_YM}}</td>
+          </tr>
+          <tr>
+            <td>Poisson's Ratio</td>
+            <td>{{ risersizing.PR }}</td>
+          </tr>
+          <tr>
+            <td>Content Density (lb/ft3)</td>
+            <td>{{ risersizing.fluid_density }}</td>
+          </tr>
+          <tr>
+            <td>Hydrotest Fluid Density (lb/ft3)</td>
+            <td>{{ risersizing.hydro_density }}</td>
+          </tr>
+          <tr>
+            <td>Riser Surrounding Fluid Density (lb/ft3)</td>
+            <td>{{ risersizing.outer_density }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        <a href="https://www.ecfr.gov/current/title-49/subtitle-B/chapter-I/subchapter-D/part-195#p-195.106(a)">49 CFR 195</a> and
+        ASME B31.4 are Applicable to DOT liquid pipe for checking the riser pipe burst performance. <a href="https://www.ecfr.gov/current/title-30/chapter-II/subchapter-B/part-250/subpart-J/section-250.1002">30 CFR 250</a>
+        and API RP 1111 may be used for {{ risersizing.project_name }} sizing too.
+
+
+
+      <a name="references"></a>
+      <h5>References</h5>
+      <p>
+        <ol>
+          {% if risersizing.pipe_category == "DOT_liquid" %}
+            <li><a href="https://www.ecfr.gov/current/title-49/subtitle-B/chapter-I/subchapter-D/part-195">49 CFR 195</a>: Transportation of Hazardous Liquids by Pipeline</li>
+            <li>ASME B31.4, 2019 - Pipeline Transportation Systems for Liquids and Slurries</li>
+          {% endif %}
+
+          {% if risersizing.pipe_category == "DOT_gas" %}
+            <li><a href="https://www.ecfr.gov/current/title-49/subtitle-B/chapter-I/subchapter-D/part-192">49 CFR 192</a>: Transportation of Natural and Other Gas by Pipeline: Minimum Federal Safety standards</li>
+          {% endif %}
+
+          <li><a href="https://www.ecfr.gov/current/title-30/chapter-II/subchapter-B/part-250/subpart-J/section-250.1002">30 CFR 250</a>: Oil and Gas Sulphur Operations in the Outer Continental Shelf</li>
+          <li>API RP 1111, 5th Edition, September 2015 - Design, Construction, Operation, and Maintenance of Offshore Hydrocarbon Pipelines (Limit State Design)</li>
+          <li>API RP 2RD, 1st Edition, June 1998, Errata June 2009 - Design of Risers for Floating Production Systems (FPSs) and Tension-Leg Platforms (TLPs)</li>
+          <li>ASME B31.8, 2018 - Gas Transmission and Distribution Piping Systems</li>
+          <li>BSEE <a href="https://www.bsee.gov/notices-to-lessees-ntl/notices-to-lessees/ntl-2009-g28-alternate-compliance-and-departure-requests">NTL 2009-G28</a>: Alternate Compliance and Departure Requests in Pipeline Applications</li>
+        </ol>
+      </p>
+
+      <div class="clearfix">
+        <a class="btn btn-primary btn-sm" href="{% url 'risers:Risersizing_edit' username=risersizing.user.username pk=risersizing.pk %}"><span class="fa fa-pencil  float-left">Update</span></a>
+
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+{% endblock %}

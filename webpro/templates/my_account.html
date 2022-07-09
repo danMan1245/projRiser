@@ -1,0 +1,40 @@
+<!-- templates/home.html #0013-->
+{% extends '_base.html' %}
+{% load static %}
+
+{% block title %}My Modules{% endblock title %}
+
+{% block content %}
+
+
+  <div class="container my-md-4">
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="sticky-top">
+          <h4>My Account</h4>
+
+              <ul class="nav nav-sm flex-column">
+                <li class="nav-item list-unstyled">
+                  <a class="nav-link d-inline-flex" href="#">My Profile</a>
+                </li>
+                <li class="nav-item list-unstyled">
+                  <a class="nav-link d-inline-flex" href="{% url 'account_reset_password' %}">Reset Password</a>
+                </li>
+                <li class="nav-item list-unstyled">
+                  <a class="nav-link d-inline-flex" href="{% url 'account_logout' %}">Log Out</a>
+                </li>
+              </ul>
+
+        </div>
+      </div>
+
+      <div class="col-sm-9">
+
+
+      </div>
+    </div>
+  </div>
+
+
+
+{% endblock content%}
